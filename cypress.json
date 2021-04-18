@@ -5,7 +5,7 @@
   "integrationFolder": "tests/e2e",
   "testFiles": "**/*.spec.ts*",
   "component": {
-    "componentFolder": "tests/components",
+    "componentFolder": "src",
     "testFiles": "**/*.spec.ts"
   }
 }
