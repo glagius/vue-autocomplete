@@ -9,10 +9,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/node": "^14.14.41",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "lodash": "^4.17.15",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-spinner": "^1.0.4"
   },
   "devDependencies": {
     "@cypress/vue": "^2.2.0",
