@@ -60,8 +60,12 @@ describe('AutoComplete component', () => {
       dataLoader: () => fakeUsersLoader(users, 2000, false),
       imagesLoader: () => fakeAvatarLoader(avatars, 1500, false),
     };
+    const spy = cy.spy();
+
     mount(App, { propsData });
-    cy.get('fieldset').should('exist');
+    cy.get('fieldset').should('exist').then(() => {
+      Cypress.vue.$on('selected', spy);
+    });
     cy.get('[data-test-id="search__field"]')
       .type('el')
       .wait(2500)
@@ -72,7 +76,10 @@ describe('AutoComplete component', () => {
       .get('[data-test-id="promt-card"]')
       .should('not.exist')
       .get('[data-test-id="search__field"]')
-      .should('have.value', 'Samuel');
+      .should('have.value', 'Samuel')
+      .then(() => {
+        expect(spy).to.be.called;
+      });
   });
   // FIXME: Only for test-work. Don't do that in prod
   it('works with real data', () => {
@@ -112,7 +119,7 @@ describe('AutoComplete component', () => {
       .get('.error')
       .should('not.exist');
   });
-  it.only('works with empty lists', () => {
+  it('works with empty lists', () => {
     const propsData = {
       dataLoader: () => fakeUsersLoader([], 2000, false),
       imagesLoader: () => fakeAvatarLoader([], 1500, false),
