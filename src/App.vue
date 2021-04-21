@@ -12,8 +12,7 @@
                       :image="user.avatar"></promt-card>
         </li>
       </ul>
-      <spinner v-show="loading"
-               class='spinner'></spinner>
+      <spinner v-show="loading"></spinner>
       <p v-if="failed"
             class='error'>Data request failed</p>
       <!-- loader if LOADING -->
