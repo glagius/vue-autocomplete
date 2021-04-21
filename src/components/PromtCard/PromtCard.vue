@@ -43,7 +43,6 @@ export default Vue.extend({
   },
   methods: {
     setAltImage(event: Event) {
-      console.error('Event = ', event, '\nSrc = ', this.source);
       this.source = defaultImage;
     },
   },

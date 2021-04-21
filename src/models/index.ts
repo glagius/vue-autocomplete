@@ -1,30 +1,10 @@
+/* eslint-disable no-shadow */
 interface User {
   name: string,
-  username: string,
-  email: string,
-  phone: string,
-  website: string,
+  avatar?: string,
 }
-
-interface Address {
-  street: string,
-  suite: string,
-  city: string,
-  zipcode: string,
-  geo: {
-    lat: string,
-    lng: string
-  }
-}
-
-interface Company {
-  [prop: string]: string
-}
-
 export interface UserInfo extends User {
   id: number,
-  address: Address,
-  company: Company,
 }
 
 export interface UserAvatar {
@@ -33,4 +13,11 @@ export interface UserAvatar {
   title: string,
   url: string,
   thumbnailUrl: string
+}
+
+export enum SearchState {
+  idle = 'idle',
+  loading = 'loading',
+  loaded = 'loaded',
+  failed = 'failed'
 }

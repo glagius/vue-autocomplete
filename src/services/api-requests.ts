@@ -1,6 +1,9 @@
 import { UserInfo } from '@/models';
 import axios from 'axios';
 
-const usersUrl = 'https://jsonplaceholder.typicode.com/users';
+export const usersUrl = 'https://jsonplaceholder.typicode.com/users';
+export const imagesUrl = 'https://jsonplaceholder.typicode.com/photos';
 
-export default (url = usersUrl): Promise<UserInfo> => axios.get(url);
+export const loader = (url: string): Promise<UserInfo[] | string[]> => axios
+  .get(url)
+  .then((res) => res.data);

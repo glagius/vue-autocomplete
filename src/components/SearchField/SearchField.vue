@@ -24,18 +24,18 @@ export default Vue.extend({
   },
   data() {
     return {
-      text: null,
+      text: this.searchValue,
     };
   },
   methods: {
     searchUser: debounce(function (event): void {
-      this.text = event.target.value;
       this.$emit('search', event.target.value);
     }, 500),
   },
-
-  mounted() {
-    this.text = this.$props.searchValue;
+  watch: {
+    searchValue() {
+      this.text = this.searchValue;
+    },
   },
 });
 </script>
@@ -43,6 +43,7 @@ export default Vue.extend({
   label {
     display: flex;
     padding: 1rem;
+    border-bottom: 1px solid #262626;
 
     :first-child {
       margin-right: 1rem;
