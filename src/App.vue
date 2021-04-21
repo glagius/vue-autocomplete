@@ -3,7 +3,8 @@
     <search-field :searchValue="searchText"
                   @search="getUsers"></search-field>
     <div>
-      <ul v-if="loaded" class="container">
+      <ul v-if="loaded" class="container"
+          data-test-id="card__container">
         <li v-for="user in users"
             :key="`${user.id}-${user.name}`"
             @click="selectUser(user)">
@@ -47,6 +48,7 @@ export default Vue.extend({
       user: {} as UserInfo,
       searchText: '',
       users: [] as UserInfo[],
+      error: null,
     };
   },
   methods: {
@@ -63,15 +65,11 @@ export default Vue.extend({
           const avatar = images.find((image) => image.id === user.id) || {};
           return { ...user, avatar: avatar.url || null };
         });
-        this.showMatches(usersWithAvatars);
-        this.setStatus(SearchState.loaded);
+        this.users = usersWithAvatars;
       } catch (err) {
-        this.setStatus(SearchState.failed);
-        setTimeout(() => this.setStatus(SearchState.idle), 2000);
+        this.error = err;
+        setTimeout(() => { this.error = null; }, 2000);
       }
-    },
-    showMatches(users: UserInfo[]) {
-      this.users = users;
     },
     setStatus(nextStatus: SearchState) {
       this.status = nextStatus;
@@ -79,7 +77,23 @@ export default Vue.extend({
     selectUser(user: UserInfo) {
       this.$data.searchText = user.name;
       this.user = user;
-      this.setStatus(SearchState.idle);
+      this.users = [];
+    },
+  },
+  watch: {
+    users(prev, next) {
+      if (next.length === 0) {
+        this.setStatus(SearchState.idle);
+      } else {
+        this.setStatus(SearchState.loaded);
+      }
+    },
+    error(prev, next) {
+      if (next) {
+        this.setStatus(SearchState.failed);
+      } else {
+        this.setStatus(SearchState.idle);
+      }
     },
   },
   computed: {
@@ -101,6 +115,7 @@ export default Vue.extend({
 
 <style lang="scss">
 fieldset {
+  max-width: 21.5rem;
   padding: unset;
   outline: unset;
   border: unset;

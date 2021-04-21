@@ -112,4 +112,17 @@ describe('AutoComplete component', () => {
       .get('.error')
       .should('not.exist');
   });
+  it.only('works with empty lists', () => {
+    const propsData = {
+      dataLoader: () => fakeUsersLoader([], 2000, false),
+      imagesLoader: () => fakeAvatarLoader([], 1500, false),
+    };
+    mount(App, { propsData });
+    cy.get('fieldset').should('exist');
+    cy.get('[data-test-id="search__field"]')
+      .type('el')
+      .wait(2500)
+      .get('[data-test-id="card__container"]')
+      .should('not.exist');
+  });
 });
