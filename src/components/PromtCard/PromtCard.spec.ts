@@ -34,7 +34,7 @@ describe('PromtCard component', () => {
       .should('have.attr', 'src')
       .and('not.equal', image);
   });
-  it.only('show default image, if the address isn\'t specified', () => {
+  it('show default image, if the address isn\'t specified', () => {
     const image = 'http://some-other-address.com/image.png';
 
     mount(PromtCard, { propsData: { name, contactInfo, image: null } });
