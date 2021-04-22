@@ -77,8 +77,18 @@ describe('AutoComplete component', () => {
       .should('not.exist')
       .get('[data-test-id="search__field"]')
       .should('have.value', 'Samuel')
+      .clear()
+      .type('ol')
+      .wait(2500)
+      .get('[data-test-id="promt-card"]')
+      .should('have.length', 1)
+      .first()
+      .click()
+      .get('[data-test-id="search__field"]')
+      .should('have.value', 'Ol')
       .then(() => {
-        expect(spy).to.be.called;
+        // TODO: Should check emited value
+        expect(spy).to.be.calledWith(Cypress.sinon.match(users[2]));
       });
   });
   // FIXME: Only for test-work. Don't do that in prod

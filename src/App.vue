@@ -81,22 +81,21 @@ export default Vue.extend({
     },
   },
   watch: {
-    users(prev, next) {
+    users(next) {
       if (next.length === 0) {
+        this.setStatus(SearchState.idle);
+      } else {
         this.setStatus(SearchState.loaded);
-      } else {
-        this.setStatus(SearchState.idle);
       }
     },
-    error(prev, next) {
+    error(next) {
       if (next) {
-        this.setStatus(SearchState.idle);
-      } else {
         this.setStatus(SearchState.failed);
+      } else {
+        this.setStatus(SearchState.idle);
       }
     },
-    user(prev, next) {
-      console.log('This user = ', this.user);
+    user(next) {
       if (next) {
         this.$emit('selected', this.user);
       }

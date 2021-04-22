@@ -47,7 +47,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.source = this.image;
+    this.source = this.image || defaultImage;
   },
 });
 </script>
